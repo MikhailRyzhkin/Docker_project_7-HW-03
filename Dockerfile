@@ -1,14 +1,8 @@
 # Используем стандартный легковесный образ python последней версии - 3.9.16-alpine3.17
 FROM python:3.9.16-alpine3.17
 
-# Обновляем кэш и ставим нужные пакеты для работы python и базы данных
-RUN yum install libpq-devel.x86_64 gcc -y && pip install Flask Psycopg2 ConfigParser
+# Обновляем кэш и ставим нужные пакеты для работы python и базы данных, удаляем кэш
+RUN RUN /usr/local/bin/python -m pip install --upgrade pip && apk update && apk add --no-cache --virtual .gyp python3 make g++ && pip install Flask psycopg2-binary ConfigParser && mkdir /srv/app/ && rm -rf /var/tmp/* /var/cache/*
 
-# Контейнер слушает указанный ниже порт
-EXPOSE 80
-
-# Cоздает точку монтирования с заданным именем и помечает его как внешний смонтированный том из базового хоста
-VOLUME ["/srv/app/", "/srv/app/conf/"]
-
-# Запускает скрипт python их примонтированной папки хоста
-ENTRYPOINT ["python3", "/srv/app/web.py"]
+# Запускает скрипт python из примонтированной папки хоста
+ENTRYPOINT python /srv/app/web.py
