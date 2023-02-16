@@ -26,5 +26,7 @@
 
 1. Копируем файл скрипта  конфига с заполненными данными для подключения к развёрнутой БД в указанные в задании папки хостовой файловой системы.
 2. Пишем докерфайл.
-3. Собираем образ по инструкциям докерфайла с названием PythonAppImige: docker build -t pythonappimige .
-4. Запускаем контейнер из собранного образа с пробросом портов и именем контейнера PythonAppImige: docker run -d --mount type=bind,src=/srv/app/,dst=/srv/app/ -p 80:80 --name pythonapp pythonappimige 
+3. Собираем образ по инструкциям докерфайла с названием pythonappimige: 
+   docker build -t pythonappimige .
+4. Запускаем контейнер из собранного образа с пробросом портов и именем контейнера pythonappimige: 
+   docker run -d --mount type=bind,src=/srv/app/,dst=/srv/app/ -p 80:80 --name pythonapp pythonappimige 
